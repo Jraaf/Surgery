@@ -19,5 +19,6 @@ namespace DataAccess.Repository.Base
         Task<bool> DeleteAsync(TEntity entity);
         Task<bool> DeleteManyAsync(IEnumerable<TEntity> entities);
         Task<int> SaveChangesAsync();
-        i
+
     }
+}
