@@ -9,4 +9,5 @@ namespace Business.Services.Interfaces;
 
 public interface IMedicalCaseService : ICrud<MedicalCase>
 {
+    Task<List<MedicalCase>> GetMyMedicalCases(int doctorId);
 }

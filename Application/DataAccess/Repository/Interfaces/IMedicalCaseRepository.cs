@@ -10,4 +10,5 @@ namespace DataAccess.Repository.Interfaces;
 
 public interface IMedicalCaseRepository : IRepo<MedicalCase, int>
 {
+    Task<List<MedicalCase>> GetMyMedicalCases(int doctorId);
 }

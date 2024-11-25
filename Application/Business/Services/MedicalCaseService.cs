@@ -33,6 +33,11 @@ public class MedicalCaseService(IMedicalCaseRepository _repo) : IMedicalCaseServ
         return await _repo.GetAsync(id) ?? throw new NotFoundException(id);
     }
 
+    public async Task<List<MedicalCase>> GetMyMedicalCases(int doctorId)
+    {
+        return await _repo.GetMyMedicalCases(doctorId);
+    }
+
     public async Task<MedicalCase> UpdateByIdAsync(int id, MedicalCase model)
     {
         var data = await _repo.GetAsync(id) ?? throw new NotFoundException(id);
