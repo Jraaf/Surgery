@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using App.MVVM.View;
+using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,11 +17,17 @@ namespace Application
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {      
+    {
+        private readonly IServiceProvider _serviceProvider;
 
-        public MainWindow()
+        public MainWindow(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            _serviceProvider = serviceProvider;
+
+            // Programmatically create HomeView
+            var homeView = _serviceProvider.GetRequiredService<HomeView>();
+            MainGrid.Children.Add(homeView); // Assuming MainGrid is a container in MainWindow.xaml
         }
     }
 }

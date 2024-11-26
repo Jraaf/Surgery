@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace App.Core
 {
-    class RelayCommand : ICommand
+    class CommandBase : ICommand
     {
         public event EventHandler? CanExecuteChanged
         {
@@ -17,7 +17,7 @@ namespace App.Core
         private Action<object> execute;
         private Func<object, bool> canExecute;
 
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        public CommandBase(Action<object> execute, Func<object, bool> canExecute = null)
         {
             this.execute = execute;
             this.canExecute = canExecute;

@@ -26,6 +26,7 @@ public class MedicalCaseRepository : Repo<MedicalCase, int>, IMedicalCaseReposit
             .Where(dic => dic.DoctorId == doctorId) // Filter by DoctorId
             .Select(dic => dic.Case!) // Select the related MedicalCase
             .Include(mc => mc.Patient) // Include the related Patient entity
+            .Include(mc=>mc.Diagnose)
             .ToListAsync();
 
         return medicalCases;
