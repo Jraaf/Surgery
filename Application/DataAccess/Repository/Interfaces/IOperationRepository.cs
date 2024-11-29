@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repository.Interfaces;
 
-internal interface IOperationRepository : IRepo<Operation, int>
+public interface IOperationRepository : IRepo<Operation, int>
 {
 }

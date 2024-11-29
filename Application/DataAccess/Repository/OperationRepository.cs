@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repository;
 
-public class OperationRepository:Repo<Operation,int>,IOperationRepository
+public class OperationRepository : Repo<Operation, int>, IOperationRepository
 {
     public OperationRepository(OperationsDepartmentContext context)
-        :base(context)
+        : base(context)
     {
-        
+
     }
 }

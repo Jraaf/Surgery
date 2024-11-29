@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repository;
 
-public class InsuranseRepository:Repo<Insurance,int>,IInsuranceRepository
+public class InsuranceRepository:Repo<Insurance,int>,IInsuranceRepository
 {
-    public InsuranseRepository(OperationsDepartmentContext context)
+    public InsuranceRepository(OperationsDepartmentContext context)
         :base(context)
     {
         
