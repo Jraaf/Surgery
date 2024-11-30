@@ -22,11 +22,11 @@ public static class BusinessLogicExtension
     }
     public static IServiceCollection AddRequiredServices(this IServiceCollection services)
     {
+        //services.AddScoped<IOperationService, OperationService>();
         services.AddScoped<IDiagnosisService, DiagnosisService>();
         services.AddScoped<IDoctorService, DoctorService>();
         services.AddScoped<IInsuranceService, InsuranceService>();
         services.AddScoped<IMedicalCaseService, MedicalCaseService>();
-        services.AddScoped<IOperationService, OperationService>();
         services.AddScoped<IPatientService, PatientService>();
         services.AddScoped<IResearchService, ResearchService>();
         return services;
