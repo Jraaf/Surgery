@@ -1,5 +1,6 @@
 ﻿using Business.Services.Interfaces;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace API_controllers.Controllers
             return NoContent();
         }
         [HttpGet("GetById")]
+        
         public async Task<IActionResult> GetById(int id)
         {
             var data = await _service.GetAsync(id);

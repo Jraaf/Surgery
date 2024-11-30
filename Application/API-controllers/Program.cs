@@ -18,7 +18,7 @@ builder.Services.AddDbContext<OperationsDepartmentContext>(options =>
 
 builder.Services.AddRepository();
 builder.Services.AddRequiredServices();
-
+builder.Services.AddAuthenticationServices(builder.Configuration);
 
 var app = builder.Build();
 

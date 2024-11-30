@@ -2,6 +2,7 @@
 using Business.Services.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Repository;
+using DataAccess.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services;
 
-public class OperationService(OperationRepository _repo) : IOperationService
+public class OperationService(IOperationRepository _repo) : IOperationService
 {
     public async Task<Operation> AddAsync(Operation model)
     {

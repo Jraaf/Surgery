@@ -1,18 +1,18 @@
-﻿using System;
+﻿using DataAccess.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Entities
+namespace Business.DTO
 {
-    public class User
+    public class UserDTO
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public required byte[] Password { get; set; }
-        public required byte[] PasswordSalt { get; set; }
+        public string AccessToken { get; set; }
         public int DoctorId { get; set; }
-        public Doctor Doctor { get; set; }
+        public Doctor? Doctor { get; set; }
     }
 }
