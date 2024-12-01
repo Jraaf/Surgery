@@ -1,4 +1,5 @@
 using API_controllers.Extensions;
+using Business.Automapper;
 using DataAccess.EF;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<OperationsDepartmentContext>(options =>
 });
 
 builder.Services.AddRepository();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddRequiredServices();
 builder.Services.AddAuthenticationServices(builder.Configuration);
 

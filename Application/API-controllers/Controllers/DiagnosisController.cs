@@ -1,7 +1,7 @@
 ﻿using Business.DTO;
 using Business.Services.Interfaces;
 using DataAccess.Entities;
-using Microsoft.AspNetCore.Authorization;
+using DataAccess.Repository.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +9,7 @@ namespace API_controllers.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MedicalCaseController(IMedicalCaseService _service) : ControllerBase
+    public class DiagnosisController(IDiagnosisService _service) : ControllerBase
     {
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
@@ -33,7 +33,7 @@ namespace API_controllers.Controllers
             return NoContent();
         }
         [HttpPost("add")]
-        public async Task<IActionResult> Post(CreateMedicalCaseDTO model)
+        public async Task<IActionResult> Post(CreateDiagnosisDTO model)
         {
             var data = await _service.AddAsync(model);
             return Ok(data);
@@ -45,7 +45,7 @@ namespace API_controllers.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update(int id, CreateMedicalCaseDTO DTO)
+        public async Task<IActionResult> Update(int id, CreateDiagnosisDTO DTO)
         {
             var data = await _service.UpdateByIdAsync(id, DTO);
             return Ok(data);

@@ -1,4 +1,5 @@
-﻿using DataAccess.Entities;
+﻿using Business.DTO;
+using DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Interfaces;
 
-public interface IDiagnosisService : ICrud<Diagnosis>
+public interface IDiagnosisService : ICrud<Diagnosis,CreateDiagnosisDTO>
 {
 }

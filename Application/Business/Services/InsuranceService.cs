@@ -1,4 +1,6 @@
-﻿using Business.Exceptions;
+﻿using AutoMapper;
+using Business.DTO;
+using Business.Exceptions;
 using Business.Services.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Repository.Interfaces;
@@ -10,34 +12,11 @@ using System.Threading.Tasks;
 
 namespace Business.Services;
 
-public class InsuranceService(IInsuranceRepository _repo) : IInsuranceService
+public class InsuranceService : Service<Insurance, CreateInsuranceDTO>, IInsuranceService
 {
-    public async Task<Insurance> AddAsync(Insurance model)
+    public InsuranceService(IInsuranceRepository _repo, IMapper _mapper)
+        : base(_mapper, _repo)
     {
-        return await _repo.AddAsync(model);
-    }
 
-    public async Task DeleteAsync(int id)
-    {
-        var data = await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-        await _repo.DeleteAsync(data);
-    }
-
-    public async Task<List<Insurance>> GetAllAsync()
-    {
-        return await _repo.GetAllAsync();
-    }
-
-    public async Task<Insurance> GetAsync(int id)
-    {
-        return await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-    }
-
-    public async Task<Insurance> UpdateByIdAsync(int id, Insurance model)
-    {
-        var data = await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-        model.InsuranceId = id;
-        data = model;
-        return await _repo.UpdateAsync(data);
     }
 }

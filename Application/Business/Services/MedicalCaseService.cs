@@ -1,4 +1,6 @@
-﻿using Business.Exceptions;
+﻿using AutoMapper;
+using Business.DTO;
+using Business.Exceptions;
 using Business.Services.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Repository.Interfaces;
@@ -10,39 +12,21 @@ using System.Threading.Tasks;
 
 namespace Business.Services;
 
-public class MedicalCaseService(IMedicalCaseRepository _repo) : IMedicalCaseService
+public class MedicalCaseService :Service<MedicalCase,CreateMedicalCaseDTO>, IMedicalCaseService
 {
-    public async Task<MedicalCase> AddAsync(MedicalCase model)
-    {
-        return await _repo.AddAsync(model);
-    }
+    private readonly IMedicalCaseRepository repo;
+    private readonly IMapper mapper;
 
-    public async Task DeleteAsync(int id)
+    public MedicalCaseService(IMedicalCaseRepository _repo, IMapper _mapper)
+        :base(_mapper, _repo)
     {
-        var data = await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-        await _repo.DeleteAsync(data);
-    }
-
-    public async Task<List<MedicalCase>> GetAllAsync()
-    {
-        return await _repo.GetAllAsync();
-    }
-
-    public async Task<MedicalCase> GetAsync(int id)
-    {
-        return await _repo.GetAsync(id) ?? throw new NotFoundException(id);
+        repo = _repo;
+        mapper = _mapper;
     }
 
     public async Task<List<MedicalCase>> GetMyMedicalCases(int doctorId)
     {
-        return await _repo.GetMyMedicalCases(doctorId);
-    }
-
-    public async Task<MedicalCase> UpdateByIdAsync(int id, MedicalCase model)
-    {
-        var data = await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-        model.CaseId = id;
-        data = model;
-        return await _repo.UpdateAsync(data);
+        var data = await repo.GetMyMedicalCases(doctorId);
+        return mapper.Map<List<MedicalCase>>(data);
     }
 }

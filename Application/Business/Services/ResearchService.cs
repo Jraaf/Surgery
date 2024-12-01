@@ -1,7 +1,10 @@
-﻿using Business.Exceptions;
+﻿using AutoMapper;
+using Business.DTO;
+using Business.Exceptions;
 using Business.Services.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,34 +13,11 @@ using System.Threading.Tasks;
 
 namespace Business.Services;
 
-public class ResearchService(IResearchRepository _repo) : IResearchService
+public class ResearchService : Service<Research, CreateResearchDTO>, IResearchService
 {
-    public async Task<Research> AddAsync(Research model)
+    public ResearchService(IResearchRepository _repo, IMapper _mapper)
+        : base(_mapper,_repo)
     {
-        return await _repo.AddAsync(model);
-    }
 
-    public async Task DeleteAsync(int id)
-    {
-        var data = await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-        await _repo.DeleteAsync(data);
-    }
-
-    public async Task<List<Research>> GetAllAsync()
-    {
-        return await _repo.GetAllAsync();
-    }
-
-    public async Task<Research> GetAsync(int id)
-    {
-        return await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-    }
-
-    public async Task<Research> UpdateByIdAsync(int id, Research model)
-    {
-        var data = await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-        model.ResearchId = id;
-        data = model;
-        return await _repo.UpdateAsync(data);
     }
 }

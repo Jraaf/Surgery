@@ -1,4 +1,6 @@
-﻿using Business.Exceptions;
+﻿using AutoMapper;
+using Business.DTO;
+using Business.Exceptions;
 using Business.Services.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Repository;
@@ -11,35 +13,12 @@ using System.Threading.Tasks;
 
 namespace Business.Services;
 
-public class OperationService(IOperationRepository _repo) : IOperationService
+public class OperationService : Service<Operation, CreateOperationDTO>, IOperationService
 {
-    public async Task<Operation> AddAsync(Operation model)
+    public OperationService(IOperationRepository _repo, IMapper _mapper)
+        : base(_mapper, _repo)
     {
-        return await _repo.AddAsync(model);
-    }
 
-    public async Task DeleteAsync(int id)
-    {
-        var data = await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-        await _repo.DeleteAsync(data);
-    }
-
-    public async Task<List<Operation>> GetAllAsync()
-    {
-        return await _repo.GetAllAsync();
-    }
-
-    public async Task<Operation> GetAsync(int id)
-    {
-        return await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-    }
-
-    public async Task<Operation> UpdateByIdAsync(int id, Operation model)
-    {
-        var data = await _repo.GetAsync(id) ?? throw new NotFoundException(id);
-        model.OperationId = id;
-        data = model;
-        return await _repo.UpdateAsync(data);
     }
 }
 

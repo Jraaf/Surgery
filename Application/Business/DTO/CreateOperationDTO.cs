@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Business.DTO
 {
-    internal class CraeteDiagnosisDTO
+    public class CreateOperationDTO
     {
+        public string OperationName { get; set; } = null!;
+
+        public decimal OperationCost { get; set; }
     }
 }
