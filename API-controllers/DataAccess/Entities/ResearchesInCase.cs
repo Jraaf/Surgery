@@ -13,10 +13,7 @@ public partial class ResearchesInCase
     public int? ResearchId { get; set; }
 
     public DateTime ResearchDatetime { get; set; }
-    [JsonIgnore]
     public string ResearchResult { get; set; } = null!;
-
     public virtual MedicalCase? Case { get; set; }
-
     public virtual Research? Research { get; set; }
 }

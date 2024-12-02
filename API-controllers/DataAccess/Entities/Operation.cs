@@ -11,6 +11,5 @@ public partial class Operation
     public string OperationName { get; set; } = null!;
 
     public decimal OperationCost { get; set; }
-    [JsonIgnore]
     public virtual ICollection<CaseOperation> CaseOperations { get; set; } = new List<CaseOperation>();
 }
