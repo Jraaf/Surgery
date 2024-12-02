@@ -31,4 +31,18 @@ public class MedicalCaseRepository : Repo<MedicalCase, int>, IMedicalCaseReposit
 
         return medicalCases;
     }
+    public async new Task<List<MedicalCase>> GetAllAsync()
+    {
+        return await _context.MedicalCases.Include(mc => mc.Patient) // Include the related Patient entity
+            .Include(mc => mc.Diagnose)
+            .ToListAsync();
+    }
+
+    public async new Task<MedicalCase?> GetAsync(int id)
+    {
+        return await _context.MedicalCases.Include(mc => mc.Patient) // Include the related Patient entity
+            .Include(mc => mc.Diagnose)
+            .FirstOrDefaultAsync(i => i.CaseId    == id);
+    }
+
 }

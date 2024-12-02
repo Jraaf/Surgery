@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DataAccess.Entities;
 
@@ -12,7 +13,7 @@ public partial class ResearchesInCase
     public int? ResearchId { get; set; }
 
     public DateTime ResearchDatetime { get; set; }
-
+    [JsonIgnore]
     public string ResearchResult { get; set; } = null!;
 
     public virtual MedicalCase? Case { get; set; }

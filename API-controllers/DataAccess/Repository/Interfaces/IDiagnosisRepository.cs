@@ -10,4 +10,5 @@ namespace DataAccess.Repository.Interfaces;
 
 public interface IDiagnosisRepository:IRepo<Diagnosis,int>
 {
+    Task<List<Diagnosis>> GetAllWithDetails();
 }

@@ -39,16 +39,15 @@ public partial class OperationsDepartmentContext : DbContext
     public virtual DbSet<ResearchesInCase> ResearchesInCases { get; set; }
     public virtual DbSet<User> Users { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=DESKTOP-S7D9M3G\\SQLEXPRESS;Database=OPERATIONS_DEPARTMENT;Integrated Security=true;TrustServerCertificate=true;");
+    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+    //        => optionsBuilder.UseSqlServer("Server=DESKTOP-S7D9M3G\\SQLEXPRESS;Database=OPERATIONS_DEPARTMENT;Integrated Security=true;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CaseOperation>(entity =>
         {
             entity.HasKey(e => e.CaseOperationId).HasName("PK__Case_Ope__EA267F41F48FC149");
-
             entity.ToTable("Case_Operations");
 
             entity.Property(e => e.CaseOperationId).HasColumnName("Case_Operation_ID");
@@ -61,19 +60,19 @@ public partial class OperationsDepartmentContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("Start_of_Operation");
 
+            // Foreign key with ON DELETE SET NULL
             entity.HasOne(d => d.Case).WithMany(p => p.CaseOperations)
                 .HasForeignKey(d => d.CaseId)
-                .HasConstraintName("FK__Case_Oper__Case___66603565");
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne(d => d.Operation).WithMany(p => p.CaseOperations)
                 .HasForeignKey(d => d.OperationId)
-                .HasConstraintName("FK__Case_Oper__Opera__6754599E");
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<Diagnosis>(entity =>
         {
             entity.HasKey(e => e.DiagnoseId).HasName("PK__Diagnose__E7B4E19532AF3369");
-
             entity.Property(e => e.DiagnoseId).HasColumnName("Diagnose_ID");
             entity.Property(e => e.DiagnoseDescription)
                 .HasMaxLength(1000)
@@ -84,7 +83,6 @@ public partial class OperationsDepartmentContext : DbContext
         modelBuilder.Entity<Doctor>(entity =>
         {
             entity.HasKey(e => e.DoctorId).HasName("PK__Doctors__E59B530F9FFBCB71");
-
             entity.Property(e => e.DoctorId).HasColumnName("Doctor_ID");
             entity.Property(e => e.DoctorName)
                 .HasMaxLength(100)
@@ -100,10 +98,7 @@ public partial class OperationsDepartmentContext : DbContext
 
         modelBuilder.Entity<DoctorsInCaseOperation>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Doctors_In_Case_Operation");
-
+            entity.HasNoKey().ToTable("Doctors_In_Case_Operation");
             entity.Property(e => e.CaseOperationId).HasColumnName("Case_Operation_ID");
             entity.Property(e => e.DoctorId).HasColumnName("Doctor_ID");
             entity.Property(e => e.EndOfOperating)
@@ -115,35 +110,31 @@ public partial class OperationsDepartmentContext : DbContext
 
             entity.HasOne(d => d.CaseOperation).WithMany()
                 .HasForeignKey(d => d.CaseOperationId)
-                .HasConstraintName("FK__Doctors_I__Case___693CA210");
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne(d => d.Doctor).WithMany()
                 .HasForeignKey(d => d.DoctorId)
-                .HasConstraintName("FK__Doctors_I__Docto__6A30C649");
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<DoctorsInChargeOfCase>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Doctors_In_Charge_of_Case");
-
+            entity.HasNoKey().ToTable("Doctors_In_Charge_of_Case");
             entity.Property(e => e.CaseId).HasColumnName("Case_ID");
             entity.Property(e => e.DoctorId).HasColumnName("Doctor_ID");
 
             entity.HasOne(d => d.Case).WithMany()
                 .HasForeignKey(d => d.CaseId)
-                .HasConstraintName("FK__Doctors_I__Case___628FA481");
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne(d => d.Doctor).WithMany()
                 .HasForeignKey(d => d.DoctorId)
-                .HasConstraintName("FK__Doctors_I__Docto__6383C8BA");
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<Insurance>(entity =>
         {
             entity.HasKey(e => e.InsuranceId).HasName("PK__Insuranc__FFF09853E0CE8523");
-
             entity.Property(e => e.InsuranceId).HasColumnName("Insurance_ID");
             entity.Property(e => e.InsuranceCoverageAmount)
                 .HasColumnType("money")
@@ -157,7 +148,6 @@ public partial class OperationsDepartmentContext : DbContext
         modelBuilder.Entity<MedicalCase>(entity =>
         {
             entity.HasKey(e => e.CaseId).HasName("PK__Medical___D062FC05E7749D43");
-
             entity.ToTable("Medical_Cases");
 
             entity.Property(e => e.CaseId).HasColumnName("Case_ID");
@@ -173,21 +163,20 @@ public partial class OperationsDepartmentContext : DbContext
 
             entity.HasOne(d => d.Diagnose).WithMany(p => p.MedicalCases)
                 .HasForeignKey(d => d.DiagnoseId)
-                .HasConstraintName("FK__Medical_C__Diagn__60A75C0F");
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne(d => d.Insurance).WithMany(p => p.MedicalCases)
                 .HasForeignKey(d => d.InsuranceId)
-                .HasConstraintName("FK__Medical_C__Insur__5FB337D6");
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne(d => d.Patient).WithMany(p => p.MedicalCases)
                 .HasForeignKey(d => d.PatientId)
-                .HasConstraintName("FK__Medical_C__Patie__5EBF139D");
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<Operation>(entity =>
         {
             entity.HasKey(e => e.OperationId).HasName("PK__Operatio__D9469EE7C7BA71EA");
-
             entity.Property(e => e.OperationId).HasColumnName("Operation_ID");
             entity.Property(e => e.OperationCost)
                 .HasColumnType("money")
@@ -201,7 +190,6 @@ public partial class OperationsDepartmentContext : DbContext
         modelBuilder.Entity<Patient>(entity =>
         {
             entity.HasKey(e => e.PatientId).HasName("PK__Patients__C1A88B597C7CA551");
-
             entity.Property(e => e.PatientId).HasColumnName("Patient_ID");
             entity.Property(e => e.PatientDateOfBirth).HasColumnName("Patient_Date_of_Birth");
             entity.Property(e => e.PatientName)
@@ -224,7 +212,6 @@ public partial class OperationsDepartmentContext : DbContext
         modelBuilder.Entity<Research>(entity =>
         {
             entity.HasKey(e => e.ResearchId).HasName("PK__Research__7B1735FA1A989E0C");
-
             entity.Property(e => e.ResearchId).HasColumnName("Research_ID");
             entity.Property(e => e.ResearchCost)
                 .HasColumnType("money")
@@ -243,7 +230,6 @@ public partial class OperationsDepartmentContext : DbContext
         modelBuilder.Entity<ResearchesInCase>(entity =>
         {
             entity.HasKey(e => e.LaboratoryResearchInCaseId).HasName("PK__Research__9C185E944840DA64");
-
             entity.ToTable("Researches_In_Case");
 
             entity.Property(e => e.LaboratoryResearchInCaseId).HasColumnName("Laboratory_Research_In_Case_ID");
@@ -259,11 +245,11 @@ public partial class OperationsDepartmentContext : DbContext
 
             entity.HasOne(d => d.Case).WithMany(p => p.ResearchesInCases)
                 .HasForeignKey(d => d.CaseId)
-                .HasConstraintName("FK__Researche__Case___6D0D32F4");
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne(d => d.Research).WithMany(p => p.ResearchesInCases)
                 .HasForeignKey(d => d.ResearchId)
-                .HasConstraintName("FK__Researche__Resea__6E01572D");
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         OnModelCreatingPartial(modelBuilder);

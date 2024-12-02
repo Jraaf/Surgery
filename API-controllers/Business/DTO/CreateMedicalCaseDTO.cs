@@ -15,5 +15,7 @@ namespace Business.DTO
         public int? PatientId { get; set; }
 
         public int? InsuranceId { get; set; }
+
+        public int? DiagnoseId { get; set; }
     }
 }

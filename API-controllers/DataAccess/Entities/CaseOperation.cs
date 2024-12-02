@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DataAccess.Entities;
 
@@ -14,8 +15,8 @@ public partial class CaseOperation
     public DateTime StartOfOperation { get; set; }
 
     public DateTime? EndOfOperation { get; set; }
-
+    [JsonIgnore]
     public virtual MedicalCase? Case { get; set; }
-
+    [JsonIgnore]
     public virtual Operation? Operation { get; set; }
 }

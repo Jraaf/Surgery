@@ -10,11 +10,18 @@ namespace Business.Automapper
         {
             CreateMap<CreateUserDTO, UserDTO>();
             CreateMap<LoginUserDTO, UserDTO>();
-            CreateMap<CreateDiagnosisDTO, Diagnosis>().ReverseMap();
-            CreateMap<CreateOperationDTO, Operation>().ReverseMap();
-            CreateMap<CreateDoctorDTO, Doctor>().ReverseMap();
-            CreateMap<CreateMedicalCaseDTO, Insurance>().ReverseMap();
+            CreateMap<CreateDiagnosisDTO, Diagnosis>()
+                .ForMember(dest => dest.MedicalCases, opt => opt.Ignore()); // Ignore navigation properties
+
+            CreateMap<CreateOperationDTO, Operation>()
+                .ForMember(dest => dest.CaseOperations, opt => opt.Ignore());
+
+            CreateMap<CreateDoctorDTO, Doctor>()
+                .ForMember(dest => dest.DoctorId, opt => opt.Ignore()); // Ignore the primary key
+
+            CreateMap<CreateMedicalCaseDTO, MedicalCase>().ReverseMap();
             CreateMap<CreatePatientDTO, Patient>().ReverseMap();
+            CreateMap<CreateInsuranceDTO, Insurance>();
             CreateMap<CreateResearchDTO, Research>().ReverseMap();
         }
     }
