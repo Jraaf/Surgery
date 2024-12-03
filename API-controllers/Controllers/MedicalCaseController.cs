@@ -1,4 +1,5 @@
 ﻿using Business.DTO;
+using Business.Exceptions;
 using Business.Services.Interfaces;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -14,10 +15,17 @@ namespace API_controllers.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var data = await _service.GetAllAsync();
-            if (data != null)
+            try
             {
-                return Ok(data);
+                var data = await _service.GetAllAsync();
+                if (data != null)
+                {
+                    return Ok(data);
+                }
+            }
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message);
             }
             return NoContent();
         }
@@ -25,11 +33,23 @@ namespace API_controllers.Controllers
 
         public async Task<IActionResult> GetById(int id)
         {
-            var data = await _service.GetAsync(id);
-            if (data != null)
+            try
             {
-                return Ok(data);
+                var data = await _service.GetAsync(id);
+                if (data != null)
+                {
+                    return Ok(data);
+                }
             }
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
             return NoContent();
         }
         [HttpPost("add")]

@@ -15,5 +15,6 @@ public partial class ResearchesInCase
     public DateTime ResearchDatetime { get; set; }
     public string ResearchResult { get; set; } = null!;
     public virtual MedicalCase? Case { get; set; }
+    [JsonIgnore]
     public virtual Research? Research { get; set; }
 }
