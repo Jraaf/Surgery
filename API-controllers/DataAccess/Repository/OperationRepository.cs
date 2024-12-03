@@ -1,4 +1,5 @@
-﻿using DataAccess.EF;
+﻿using Business.Exceptions;
+using DataAccess.EF;
 using DataAccess.Entities;
 using DataAccess.Repository.Base;
 using DataAccess.Repository.Interfaces;
@@ -19,5 +20,19 @@ public class OperationRepository : Repo<Operation, int>, IOperationRepository
         : base(context)
     {
         this.context = context;
+    }
+    public new async Task<List<Operation>> GetAllAsync()
+    {
+        return await context.Operations.Include(o => o.CaseOperations)
+                .ThenInclude(co => co.Case)
+                .ToListAsync();
+    }
+    public new async Task<Operation?> GetAsync(int id)
+    {
+        return await context.Operations
+            .Include(o => o.CaseOperations)
+                .ThenInclude(co => co.Case)
+            .FirstOrDefaultAsync(o => o.OperationId == id)
+                 ?? throw new NotFoundException(id);
     }
 }

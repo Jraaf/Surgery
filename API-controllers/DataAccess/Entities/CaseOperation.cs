@@ -15,8 +15,8 @@ public partial class CaseOperation
     public DateTime StartOfOperation { get; set; }
 
     public DateTime? EndOfOperation { get; set; }
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    [JsonIgnore]
     public virtual MedicalCase? Case { get; set; }
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    [JsonIgnore]
     public virtual Operation? Operation { get; set; }
 }
