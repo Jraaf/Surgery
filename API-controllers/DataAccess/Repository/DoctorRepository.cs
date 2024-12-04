@@ -3,6 +3,8 @@ using DataAccess.Entities;
 using DataAccess.Repository.Base;
 using DataAccess.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq.Expressions;
 
 namespace DataAccess.Repository;
 
@@ -14,6 +16,24 @@ public class DoctorRepository : Repo<Doctor, int>, IDoctorRepository
         : base(context)
     {
         this.context = context;
+    }
+    public async new Task<List<Doctor>> GetAllAsync()
+    {
+        return await context.Doctors
+            .Include(d => d.DoctorsInChargeOfCases)
+                .ThenInclude(dcc => dcc.Case)
+            .Include(d => d.DoctorsInCaseOperations)
+                .ThenInclude(dco => dco.CaseOperation)
+            .ToListAsync();
+    }
+    public async new Task<Doctor?> GetAsync(int id)
+    {
+        return await context.Doctors
+            .Include(d => d.DoctorsInChargeOfCases)
+                .ThenInclude(dcc => dcc.Case)
+            .Include(d => d.DoctorsInCaseOperations)
+                .ThenInclude(dco => dco.CaseOperation)
+            .FirstOrDefaultAsync(d=>d.DoctorId == id);
     }
 
     public async Task<bool> AssignMedicalCase(DoctorsInChargeOfCase entity)
