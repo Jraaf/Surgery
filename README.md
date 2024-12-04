@@ -1,170 +1,180 @@
-JWT Token Authentication API
-Overview
-This project is a .NET 8 Web API that provides endpoints for managing various healthcare-related entities (e.g., doctors, patients, medical cases) and supports JWT Token Authentication for secure access.
-________________
+---
 
+# **JWT Token Authentication API**
 
-Table of Contents
-1. API Endpoints
-2. Authentication
-3. Entity Management
-   * Diagnosis
-   * Doctors
-   * Insurance
-   * Medical Cases
-   * Operations
-   * Patients
-   * Research
-4. Schemas
-5. Security
-6. Getting Started
-________________
+This is a `.NET 8 Web API` for managing various entities such as users, doctors, diagnoses, medical cases, operations, and more, with JWT-based authentication.
 
+---
 
-API Endpoints
-Authentication
-* Register
+## **API Endpoints**
 
-   * POST /api/Authentication/register
-   * Request Body: CreateUserDTO
-   * Response: UserDTO
-   * Login
+### **Authentication**
+| Method | Endpoint                        | Description                   |
+|--------|----------------------------------|-------------------------------|
+| POST   | `/api/Authentication/register`  | Register a new user           |
+| POST   | `/api/Authentication/login`     | Log in with existing credentials |
 
-      * POST /api/Authentication/login
-      * Request Body: LoginUserDTO
-      * Response: UserDTO
-Diagnosis
-      * Get All Diagnoses: GET /api/Diagnosis/GetAll
-      * Get Diagnosis by ID: GET /api/Diagnosis/GetById?id={id}
-      * Add Diagnosis: POST /api/Diagnosis/add
-      * Request Body: CreateDiagnosisDTO
-      * Update Diagnosis: PUT /api/Diagnosis/Update?id={id}
-      * Request Body: CreateDiagnosisDTO
-      * Delete Diagnosis: DELETE /api/Diagnosis/Delete?id={id}
-Doctors
-      * Get All Doctors: GET /api/Doctor/GetAll
-      * Get Doctor by ID: GET /api/Doctor/GetById?id={id}
-      * Add Doctor: POST /api/Doctor/add
-      * Request Body: CreateDoctorDTO
-      * Update Doctor: PUT /api/Doctor/Update?id={id}
-      * Request Body: CreateDoctorDTO
-      * Delete Doctor: DELETE /api/Doctor/Delete?id={id}
-Insurance
-      * Get All Insurance: GET /api/Insurance/GetAll
-      * Get Insurance by ID: GET /api/Insurance/GetById?id={id}
-      * Add Insurance: POST /api/Insurance/add
-      * Request Body: CreateInsuranceDTO
-      * Update Insurance: PUT /api/Insurance/Update?id={id}
-      * Request Body: CreateInsuranceDTO
-      * Delete Insurance: DELETE /api/Insurance/Delete?id={id}
-Medical Cases
-      * Get All Medical Cases: GET /api/MedicalCase/GetAll
-      * Get Medical Case by ID: GET /api/MedicalCase/GetById?id={id}
-      * Add Medical Case: POST /api/MedicalCase/add
-      * Request Body: CreateMedicalCaseDTO
-      * Update Medical Case: PUT /api/MedicalCase/Update?id={id}
-      * Request Body: CreateMedicalCaseDTO
-      * Delete Medical Case: DELETE /api/MedicalCase/Delete?id={id}
-Operations
-      * Get All Operations: GET /api/Operation/GetAll
-      * Get Operation by ID: GET /api/Operation/GetById?id={id}
-      * Add Operation: POST /api/Operation/add
-      * Request Body: CreateOperationDTO
-      * Update Operation: PUT /api/Operation/Update?id={id}
-      * Request Body: CreateOperationDTO
-      * Delete Operation: DELETE /api/Operation/Delete?id={id}
-Patients
-      * Get All Patients: GET /api/Patient/GetAll
-      * Get Patient by ID: GET /api/Patient/GetById?id={id}
-      * Add Patient: POST /api/Patient/add
-      * Request Body: CreatePatientDTO
-      * Update Patient: PUT /api/Patient/Update?id={id}
-      * Request Body: CreatePatientDTO
-      * Delete Patient: DELETE /api/Patient/Delete?id={id}
-Research
-      * Get All Research: GET /api/Research/GetAll
-      * Get Research by ID: GET /api/Research/GetById?id={id}
-      * Add Research: POST /api/Research/add
-      * Request Body: CreateResearchDTO
-      * Update Research: PUT /api/Research/Update?id={id}
-      * Request Body: CreateResearchDTO
-      * Delete Research: DELETE /api/Research/Delete?id={id}
-________________
+### **Diagnosis**
+| Method | Endpoint                  | Description               |
+|--------|----------------------------|---------------------------|
+| GET    | `/api/Diagnosis/GetAll`    | Get all diagnoses         |
+| GET    | `/api/Diagnosis/GetById`   | Get a specific diagnosis by ID |
+| POST   | `/api/Diagnosis/add`       | Add a new diagnosis       |
+| DELETE | `/api/Diagnosis/Delete`    | Delete a diagnosis by ID  |
+| PUT    | `/api/Diagnosis/Update`    | Update a diagnosis by ID  |
 
+### **Doctor**
+| Method | Endpoint                  | Description                   |
+|--------|----------------------------|-------------------------------|
+| GET    | `/api/Doctor/GetAll`       | Get all doctors               |
+| GET    | `/api/Doctor/GetById`      | Get a specific doctor by ID   |
+| POST   | `/api/Doctor/add`          | Add a new doctor              |
+| DELETE | `/api/Doctor/Delete`       | Delete a doctor by ID         |
+| PUT    | `/api/Doctor/Update`       | Update a doctor by ID         |
+| POST   | `/api/Doctor/AssignOperation` | Assign a doctor to an operation |
+| POST   | `/api/Doctor/AssignMedicalCase` | Assign a doctor to a medical case |
 
-Schemas
-Authentication
-      * CreateUserDTO
+### **Insurance**
+| Method | Endpoint                  | Description                   |
+|--------|----------------------------|-------------------------------|
+| GET    | `/api/Insurance/GetAll`    | Get all insurances            |
+| GET    | `/api/Insurance/GetById`   | Get a specific insurance by ID|
+| POST   | `/api/Insurance/add`       | Add a new insurance           |
+| DELETE | `/api/Insurance/Delete`    | Delete an insurance by ID     |
+| PUT    | `/api/Insurance/Update`    | Update an insurance by ID     |
 
-         * username (string)
-         * password (string)
-         * doctorId (integer)
-         * LoginUserDTO
+### **Medical Case**
+| Method | Endpoint                  | Description                   |
+|--------|----------------------------|-------------------------------|
+| GET    | `/api/MedicalCase/GetAll`  | Get all medical cases         |
+| GET    | `/api/MedicalCase/GetById` | Get a specific medical case by ID |
+| POST   | `/api/MedicalCase/add`     | Add a new medical case        |
+| DELETE | `/api/MedicalCase/Delete`  | Delete a medical case by ID   |
+| PUT    | `/api/MedicalCase/Update`  | Update a medical case by ID   |
 
-            * username (string)
-            * password (string)
-            * UserDTO
+### **Operation**
+| Method | Endpoint                  | Description                   |
+|--------|----------------------------|-------------------------------|
+| GET    | `/api/Operation/GetAll`    | Get all operations            |
+| GET    | `/api/Operation/GetById`   | Get a specific operation by ID|
+| POST   | `/api/Operation/add`       | Add a new operation           |
+| DELETE | `/api/Operation/Delete`    | Delete an operation by ID     |
+| PUT    | `/api/Operation/Update`    | Update an operation by ID     |
 
-               * id (integer)
-               * username (string)
-               * accessToken (string)
-               * doctorId (integer)
-Diagnosis
-               * CreateDiagnosisDTO
-               * diagnoseDescription (string, nullable)
-Doctor
-               * CreateDoctorDTO
-               * doctorName (string, nullable)
-               * doctorSurname (string, nullable)
-Insurance
-               * CreateInsuranceDTO
-               * insuranceName (string, nullable)
-               * insuranceCoverageAmount (double)
-Medical Case
-               * CreateMedicalCaseDTO
-               * caseStartDate (date-time)
-               * caseEndDate (date-time, nullable)
-               * patientId (integer, nullable)
-               * insuranceId (integer, nullable)
-Operations
-               * CreateOperationDTO
-               * operationName (string, nullable)
-               * operationCost (double)
-Patient
-               * CreatePatientDTO
-               * patientName (string, nullable)
-               * patientSurname (string, nullable)
-               * patientPatronymic (string, nullable)
-               * patientDateOfBirth (DateOnly)
-Research
-               * CreateResearchDTO
-               * researchName (string, nullable)
-               * researchNormalValues (string, nullable)
-               * researchCost (double)
-________________
+### **Patient**
+| Method | Endpoint                  | Description                   |
+|--------|----------------------------|-------------------------------|
+| GET    | `/api/Patient/GetAll`      | Get all patients              |
+| GET    | `/api/Patient/GetById`     | Get a specific patient by ID  |
+| POST   | `/api/Patient/add`         | Add a new patient             |
+| DELETE | `/api/Patient/Delete`      | Delete a patient by ID        |
+| PUT    | `/api/Patient/Update`      | Update a patient by ID        |
 
+### **Research**
+| Method | Endpoint                  | Description                   |
+|--------|----------------------------|-------------------------------|
+| GET    | `/api/Research/GetAll`     | Get all research records      |
+| GET    | `/api/Research/GetById`    | Get a specific research by ID |
+| POST   | `/api/Research/add`        | Add a new research record     |
+| DELETE | `/api/Research/Delete`     | Delete a research record by ID|
+| PUT    | `/api/Research/Update`     | Update a research record by ID|
 
-Security
-This API uses JWT Token Authentication with the Bearer scheme.
-               * Authorization Header:
-Authorization: Bearer <your-token>
-________________
+---
 
+## **Schemas**
 
-Getting Started
-Prerequisites
-                  * .NET 8 SDK
-                  * Postman or similar API testing tools
-Setup
-                  1. Clone the repository.
-                  2. Build the project using .NET 8 SDK.
-                  3. Configure the appsettings.json for database connection and JWT settings.
-                  4. Run the API.
-Usage
-                  1. Register a user using /api/Authentication/register.
-                  2. Login using /api/Authentication/login to obtain a JWT token.
-                  3. Use the token in the Authorization header for secure endpoints.
-________________
+### **CreateUserDTO**
+```json
+{
+  "username": "string",
+  "password": "string",
+  "doctorId": 1
+}
+```
 
+### **CreateDiagnosisDTO**
+```json
+{
+  "diagnoseDescription": "string"
+}
+```
 
-Feel free to contribute or raise issues in the repository.
+### **CreateDoctorDTO**
+```json
+{
+  "doctorName": "string",
+  "doctorSurname": "string"
+}
+```
+
+### **CreateInsuranceDTO**
+```json
+{
+  "insuranceName": "string",
+  "insuranceCoverageAmount": 0.0
+}
+```
+
+### **CreateMedicalCaseDTO**
+```json
+{
+  "caseStartDate": "2024-12-03T00:00:00",
+  "caseEndDate": "2024-12-04T00:00:00",
+  "patientId": 1,
+  "insuranceId": 2,
+  "diagnoseId": 3
+}
+```
+
+### **CreateOperationDTO**
+```json
+{
+  "operationName": "string",
+  "operationCost": 100.0
+}
+```
+
+### **CreatePatientDTO**
+```json
+{
+  "patientName": "string",
+  "patientSurname": "string",
+  "patientPatronymic": "string",
+  "patientDateOfBirth": {
+    "year": 2024,
+    "month": 12,
+    "day": 3
+  }
+}
+```
+
+### **CreateResearchDTO**
+```json
+{
+  "researchName": "string",
+  "researchNormalValues": "string",
+  "researchCost": 50.0
+}
+```
+
+### **UserDTO**
+```json
+{
+  "id": 1,
+  "username": "string",
+  "accessToken": "string",
+  "doctorId": 2
+}
+```
+
+---
+
+## **Authentication**
+This API uses JWT tokens for authentication. Add the following header to all requests that require authentication:
+```
+Authorization: Bearer <your_token>
+```
+
+---
+
+Let me know if you need further customization!
