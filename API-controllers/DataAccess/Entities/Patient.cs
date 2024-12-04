@@ -15,6 +15,6 @@ public partial class Patient
     public string? PatientPatronymic { get; set; }
 
     public DateOnly PatientDateOfBirth { get; set; }
-    [JsonIgnore]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public virtual ICollection<MedicalCase> MedicalCases { get; set; } = new List<MedicalCase>();
 }

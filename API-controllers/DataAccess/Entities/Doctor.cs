@@ -11,10 +11,10 @@ public partial class Doctor
     public string DoctorName { get; set; } = null!;
 
     public string? DoctorSurname { get; set; }
-    [JsonIgnore]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public virtual ICollection<DoctorsInCaseOperation> DoctorsInCaseOperations { get; set; } = new List<DoctorsInCaseOperation>();
-    [JsonIgnore]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public virtual ICollection<DoctorsInChargeOfCase> DoctorsInChargeOfCases { get; set; } = new List<DoctorsInChargeOfCase>();
-    [JsonIgnore]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 }
