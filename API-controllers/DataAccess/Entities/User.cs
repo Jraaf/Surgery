@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataAccess.Entities
+namespace DataAccess.Entities;
+
+public partial class User
 {
-    public class User
-    {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public required byte[] Password { get; set; }
-        public required byte[] PasswordSalt { get; set; }
-        public int DoctorId { get; set; }
-        public Doctor Doctor { get; set; }
-    }
+    public int Id { get; set; }
+
+    public string Username { get; set; } = null!;
+
+    public byte[] Password { get; set; } = null!;
+
+    public int DoctorId { get; set; }
+
+    public byte[] PasswordSalt { get; set; } = null!;
+
+    public virtual Doctor Doctor { get; set; } = null!;
 }

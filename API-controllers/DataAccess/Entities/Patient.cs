@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace DataAccess.Entities;
 
@@ -15,5 +14,6 @@ public partial class Patient
     public string? PatientPatronymic { get; set; }
 
     public DateOnly PatientDateOfBirth { get; set; }
+
     public virtual ICollection<MedicalCase> MedicalCases { get; set; } = new List<MedicalCase>();
 }

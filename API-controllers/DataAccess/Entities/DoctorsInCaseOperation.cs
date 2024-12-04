@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace DataAccess.Entities;
 
@@ -13,6 +12,10 @@ public partial class DoctorsInCaseOperation
     public DateTime StartOfOperating { get; set; }
 
     public DateTime? EndOfOperating { get; set; }
+
+    public int Id { get; set; }
+
     public virtual CaseOperation? CaseOperation { get; set; }
+
     public virtual Doctor? Doctor { get; set; }
 }
