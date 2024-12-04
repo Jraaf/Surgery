@@ -29,8 +29,36 @@ public class DoctorController(IDoctorService _service) : ControllerBase
         }
         return NoContent();
     }
-    [HttpGet("GetById")]
 
+    [HttpGet("GetBusyDoctors")]
+    public async Task<IActionResult> GetBusyDoctors()
+    {
+        try
+        {
+            return Ok(await _service.GetBusyDostors());
+        }
+        catch (NotFoundException e)
+        {
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    [HttpGet("GetBestDoctors")]
+    public async Task<IActionResult> GetBestDoctors()
+    {
+        try
+        {
+            return Ok(await _service.GetBestDoctors());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    [HttpGet("GetById")]
     public async Task<IActionResult> GetById(int id)
     {
         try
@@ -73,7 +101,7 @@ public class DoctorController(IDoctorService _service) : ControllerBase
     [HttpPost("AssignOperation")]
     public async Task<IActionResult> AssignOperation(CreateDoctorsInCaseOperationsDTO dto)
     {
-        return await _service.AssignOperation(dto)? Ok():BadRequest();
+        return await _service.AssignOperation(dto) ? Ok() : BadRequest();
     }
     [HttpPost("AssignMedicalCase")]
     public async Task<IActionResult> AssignMedicalCase(CreateDoctorsInChargeOfCaseDTO dto)

@@ -8,4 +8,6 @@ public interface IDoctorService: ICrud<Doctor,CreateDoctorDTO>
 {
     Task<bool> AssignMedicalCase(CreateDoctorsInChargeOfCaseDTO dto);
     Task<bool> AssignOperation(CreateDoctorsInCaseOperationsDTO dto);
+    Task<List<Doctor?>> GetBusyDostors();
+    Task<List<Doctor?>> GetBestDoctors();
 }

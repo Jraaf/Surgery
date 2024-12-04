@@ -24,15 +24,24 @@ public class DoctorService : Service<Doctor, CreateDoctorDTO>, IDoctorService
         mapper = _mapper;
     }
 
-    public Task<bool> AssignMedicalCase(CreateDoctorsInChargeOfCaseDTO dto)
+    public async Task<bool> AssignMedicalCase(CreateDoctorsInChargeOfCaseDTO dto)
     {
         var entity = mapper.Map<DoctorsInChargeOfCase>(dto);
-        return repo.AssignMedicalCase(entity);
+        return await repo.AssignMedicalCase(entity);
     }
 
-    public Task<bool> AssignOperation(CreateDoctorsInCaseOperationsDTO dto)
+    public async Task<bool> AssignOperation(CreateDoctorsInCaseOperationsDTO dto)
     {
         var entity = mapper.Map<DoctorsInCaseOperation>(dto);
-        return repo.AssignOperation(entity);
+        return await repo.AssignOperation(entity);
+    }
+
+    public async Task<List<Doctor?>> GetBusyDostors()
+    {
+        return await repo.GetBusyDostors() ?? throw new NotFoundException();
+    }
+    public async Task<List<Doctor?>> GetBestDoctors()
+    {
+        return await repo.GetBestDoctors();
     }
 }

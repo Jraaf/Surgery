@@ -2,6 +2,7 @@
 using DataAccess.Entities;
 using DataAccess.Repository.Base;
 using DataAccess.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repository;
 
@@ -25,5 +26,21 @@ public class DoctorRepository : Repo<Doctor, int>, IDoctorRepository
     {
         await context.DoctorsInCaseOperations.AddAsync(entity);
         return await context.SaveChangesAsync() > 0;
+    }
+
+    public async Task<List<Doctor>> GetBestDoctors()
+    {
+        return await context.Doctors
+            .Include(d => d.DoctorsInCaseOperations)
+            .OrderByDescending(d => d.DoctorsInCaseOperations.Count)
+            .ToListAsync();
+    }
+
+    public async Task<List<Doctor?>> GetBusyDostors()
+    {
+        return await context.DoctorsInCaseOperations
+            .Where(o => o.EndOfOperating > DateTime.Now || o.EndOfOperating == null)
+            .Select(d => d.Doctor)
+            .ToListAsync();
     }
 }
