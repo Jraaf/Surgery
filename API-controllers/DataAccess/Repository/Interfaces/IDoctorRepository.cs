@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repository.Interfaces;
 
-public interface IDoctorRepository:IRepo<Doctor,int>
+public interface IDoctorRepository : IRepo<Doctor, int>
 {
+    Task<bool> AssignMedicalCase(DoctorsInChargeOfCase entity);
+    Task<bool> AssignOperation(DoctorsInCaseOperation entity);
 }

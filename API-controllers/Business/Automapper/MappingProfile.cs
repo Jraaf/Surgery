@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using API_controllers.Business.DTO;
+using AutoMapper;
 using Business.DTO;
 using DataAccess.Entities;
 
@@ -23,6 +24,8 @@ namespace Business.Automapper
             CreateMap<CreatePatientDTO, Patient>().ReverseMap();
             CreateMap<CreateInsuranceDTO, Insurance>();
             CreateMap<CreateResearchDTO, Research>().ReverseMap();
+            CreateMap<CreateDoctorsInCaseOperationsDTO, DoctorsInCaseOperation>();
+            CreateMap<CreateDoctorsInChargeOfCaseDTO, DoctorsInChargeOfCase>(); 
         }
     }
 }
