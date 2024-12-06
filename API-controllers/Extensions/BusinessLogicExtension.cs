@@ -11,6 +11,7 @@ public static class BusinessLogicExtension
     
     public static IServiceCollection AddRepository(this IServiceCollection services)
     {
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IDiagnosisRepository, DiagnosisRepository>();
         services.AddScoped<IDoctorRepository, DoctorRepository>();
         services.AddScoped<IInsuranceRepository, InsuranceRepository>();
@@ -22,6 +23,7 @@ public static class BusinessLogicExtension
     }
     public static IServiceCollection AddRequiredServices(this IServiceCollection services)
     {
+        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IOperationService, OperationService>();
         services.AddScoped<IDiagnosisService, DiagnosisService>();
         services.AddScoped<IDoctorService, DoctorService>();

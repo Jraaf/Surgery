@@ -25,7 +25,9 @@ namespace Business.Automapper
             CreateMap<CreateInsuranceDTO, Insurance>();
             CreateMap<CreateResearchDTO, Research>().ReverseMap();
             CreateMap<CreateDoctorsInCaseOperationsDTO, DoctorsInCaseOperation>();
-            CreateMap<CreateDoctorsInChargeOfCaseDTO, DoctorsInChargeOfCase>(); 
+            CreateMap<CreateDoctorsInChargeOfCaseDTO, DoctorsInChargeOfCase>();
+            CreateMap<User, UserDTO>();
+
         }
     }
 }

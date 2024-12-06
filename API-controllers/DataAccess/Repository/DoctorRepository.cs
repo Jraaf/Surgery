@@ -51,7 +51,10 @@ public class DoctorRepository : Repo<Doctor, int>, IDoctorRepository
     public async Task<List<Doctor>> GetBestDoctors()
     {
         return await context.Doctors
+            .Include(d => d.DoctorsInChargeOfCases)
+                .ThenInclude(dcc => dcc.Case)
             .Include(d => d.DoctorsInCaseOperations)
+                .ThenInclude(dco => dco.CaseOperation)
             .OrderByDescending(d => d.DoctorsInCaseOperations.Count)
             .ToListAsync();
     }
@@ -59,8 +62,10 @@ public class DoctorRepository : Repo<Doctor, int>, IDoctorRepository
     public async Task<List<Doctor?>> GetBusyDostors()
     {
         return await context.DoctorsInCaseOperations
+
             .Where(o => o.EndOfOperating > DateTime.Now || o.EndOfOperating == null)
             .Select(d => d.Doctor)
+
             .ToListAsync();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Business.DTO;
+﻿using AutoMapper;
+using Business.DTO;
 using Business.Exceptions;
 using Business.Services.Interfaces;
 using DataAccess.Entities;
@@ -17,60 +18,58 @@ using System.Threading.Tasks;
 
 namespace Business.Services
 {
-    public class UserService(IUserRepository _repo, IConfiguration _config) : IUserService
+    public class UserService(IUserRepository _repo, IConfiguration _config,IMapper _mapper) : IUserService
     {
-        public async Task<UserDTO> Login(LoginUserDTO user)
+        public async Task<UserDTO> Login(LoginUserDTO dto)
         {
-            var data = await _repo.GetByUsername(user.Username);
-            if (data == null)
-            {
-                throw new NotFoundException($"There are no users with username {user.Username}");
-            }
-            using var hmac = new HMACSHA512(data.PasswordSalt);
+            var user = await _repo.GetByUsername(dto.Username);
 
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(user.Password));
+            if (user == null)
+            {
+                throw new NotFoundException(dto.Username);
+            }
+
+            var hmac = new HMACSHA512(user.PasswordSalt);
+
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password));
+
             for (int i = 0; i < computedHash.Length; i++)
             {
                 if (computedHash[i] != user.Password[i])
-                    throw new Exception("WrongPassword");
+                    throw new Exception("Wrong password");
             }
-            return new UserDTO
+            var endUser = new UserDTO()
             {
+                Id = user.Id,
                 Username = user.Username,
-                AccessToken = CreateToken(user.Username)
+                AccessToken = CreateToken(user),
             };
+            return endUser;
         }
 
-        public async Task<UserDTO> Register(CreateUserDTO user)
+        public async Task<UserDTO> Register(CreateUserDTO dto)
         {
-            if (await UserExists(user.Username))
+            if (await _repo.UserExists(dto.Username))
             {
-                throw new Exception("");
+                throw new Exception($"{dto.Username} already taken");
             }
+
             using var hmac = new HMACSHA512();
 
-            var endUser = new User()
+            User user = new User()
             {
-                Username = user.Username,
-                Password = hmac.ComputeHash(Encoding.UTF8.GetBytes(user.Password)),
+                Username = dto.Username,
+                Password = hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password)),
                 PasswordSalt = hmac.Key
             };
-            await _repo.AddAsync(endUser);
 
-            return new UserDTO
-            {
-                Username = user.Username,
-                DoctorId = user.DoctorId,
-                AccessToken = CreateToken(user.Username)
-            };
+            var endUser = _mapper.Map<UserDTO>(await _repo.AddAsync(user));
+
+            endUser.AccessToken = CreateToken(user);
+            return endUser;
         }
 
-        public async Task<bool> UserExists(string username)
-        {
-            return await _repo.UserExists(username);
-        }
-
-        public string CreateToken(string username)
+        public string CreateToken(User dto)
         {
             var tokenKey = _config["TokenKey"] ?? throw new Exception("cannot access token key");
             if (tokenKey.Length < 64) throw new Exception("too short key");
@@ -79,7 +78,7 @@ namespace Business.Services
 
             var claims = new List<Claim>
         {
-            new (ClaimTypes.NameIdentifier,username)
+            new (ClaimTypes.NameIdentifier, dto.Id.ToString())
         };
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
@@ -96,5 +95,10 @@ namespace Business.Services
 
             return tokenHandler.WriteToken(token);
         }
+
+        public async Task<bool> UserExists(string username)
+        {
+            return await _repo.UserExists(username);
+        }     
     }
 }

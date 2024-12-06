@@ -5,11 +5,13 @@ using DataAccess.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API_controllers.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MedicalCaseController(IMedicalCaseService _service) : ControllerBase
     {
         [HttpGet("GetAll")]
@@ -51,6 +53,23 @@ namespace API_controllers.Controllers
             }
 
             return NoContent();
+        }
+        [HttpGet("GetMyMedicalCases")]
+        public async Task<IActionResult> GetMyMedicalCases()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            if (!int.TryParse(userId, out var Id))
+            {
+                return BadRequest("Invalid user ID format");
+            }
+
+            return Ok(await _service.GetMyMedicalCases(Id));
         }
         [HttpPost("add")]
         public async Task<IActionResult> Post(CreateMedicalCaseDTO model)

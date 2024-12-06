@@ -13,6 +13,6 @@ namespace Business.Services.Interfaces
         Task<bool> UserExists(string username);
         Task<UserDTO> Register(CreateUserDTO user);
         Task<UserDTO> Login(LoginUserDTO user);
-        string CreateToken(string username);
+        string CreateToken(User user);
     }
 }

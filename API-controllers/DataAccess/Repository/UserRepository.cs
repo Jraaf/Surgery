@@ -14,8 +14,7 @@ namespace DataAccess.Repository
         {
             _context = context;
         }
-           
-        public async Task<User> GetByUsername(string username)
+        public async Task<User?> GetByUsername(string username)
         {
             return await _context.Users.FirstOrDefaultAsync(x =>
                          x.Username.ToLower() == username.ToLower());

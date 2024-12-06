@@ -76,7 +76,7 @@ namespace DataAccess.Migrations
                     b.HasKey("DiagnoseId")
                         .HasName("PK__Diagnose__E7B4E19532AF3369");
 
-                    b.ToTable("Diagnoses");
+                    b.ToTable("Diagnoses", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.Entities.Doctor", b =>
@@ -106,7 +106,7 @@ namespace DataAccess.Migrations
                     b.HasKey("DoctorId")
                         .HasName("PK__Doctors__E59B530F9FFBCB71");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.Entities.DoctorsInCaseOperation", b =>
@@ -180,7 +180,7 @@ namespace DataAccess.Migrations
                     b.HasKey("InsuranceId")
                         .HasName("PK__Insuranc__FFF09853E0CE8523");
 
-                    b.ToTable("Insurances");
+                    b.ToTable("Insurances", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.Entities.MedicalCase", b =>
@@ -247,7 +247,7 @@ namespace DataAccess.Migrations
                     b.HasKey("OperationId")
                         .HasName("PK__Operatio__D9469EE7C7BA71EA");
 
-                    b.ToTable("Operations");
+                    b.ToTable("Operations", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.Entities.Patient", b =>
@@ -288,7 +288,7 @@ namespace DataAccess.Migrations
                     b.HasKey("PatientId")
                         .HasName("PK__Patients__C1A88B597C7CA551");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.Entities.Research", b =>
@@ -322,7 +322,7 @@ namespace DataAccess.Migrations
                     b.HasKey("ResearchId")
                         .HasName("PK__Research__7B1735FA1A989E0C");
 
-                    b.ToTable("Researches");
+                    b.ToTable("Researches", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.Entities.ResearchesInCase", b =>
@@ -390,7 +390,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("DataAccess.Entities.CaseOperation", b =>

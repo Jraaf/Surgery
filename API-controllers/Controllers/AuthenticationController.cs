@@ -17,14 +17,8 @@ namespace API_controllers.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> Register(CreateUserDTO dto)
         {
-            try
-            {
                 return Ok(await _service.Register(dto));
-            }
-            catch (Exception e)
-            {
-                return Unauthorized(e.Message);
-            }
+
         }
         [HttpPost("login")]
         public async Task<ActionResult<UserDTO>> Login(LoginUserDTO dto)

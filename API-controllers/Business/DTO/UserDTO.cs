@@ -12,7 +12,5 @@ namespace Business.DTO
         public int Id { get; set; }
         public string Username { get; set; }
         public string AccessToken { get; set; }
-        public int DoctorId { get; set; }
-        public Doctor? Doctor { get; set; }
     }
 }

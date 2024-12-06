@@ -271,11 +271,7 @@ public partial class OperationsDepartmentContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasIndex(e => e.DoctorId, "IX_Users_DoctorId");
-
             entity.Property(e => e.PasswordSalt).HasDefaultValueSql("(0x)");
-
-            entity.HasOne(d => d.Doctor).WithMany(p => p.Users).HasForeignKey(d => d.DoctorId);
         });
 
         OnModelCreatingPartial(modelBuilder);

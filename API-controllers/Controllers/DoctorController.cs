@@ -3,6 +3,7 @@ using Business.DTO;
 using Business.Exceptions;
 using Business.Services.Interfaces;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace API_controllers.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class DoctorController(IDoctorService _service) : ControllerBase
 {
     [HttpGet("GetAll")]
