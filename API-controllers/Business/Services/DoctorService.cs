@@ -38,7 +38,7 @@ public class DoctorService : Service<Doctor, CreateDoctorDTO>, IDoctorService
 
     public async Task<List<Doctor?>> GetBusyDostors()
     {
-        return await repo.GetBusyDostors() ?? throw new NotFoundException();
+        return await repo.GetBusyDoctors() ?? throw new NotFoundException();
     }
     public async Task<List<Doctor?>> GetBestDoctors()
     {

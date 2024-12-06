@@ -33,7 +33,7 @@ public class DoctorRepository : Repo<Doctor, int>, IDoctorRepository
                 .ThenInclude(dcc => dcc.Case)
             .Include(d => d.DoctorsInCaseOperations)
                 .ThenInclude(dco => dco.CaseOperation)
-            .FirstOrDefaultAsync(d=>d.DoctorId == id);
+            .FirstOrDefaultAsync(d => d.DoctorId == id);
     }
 
     public async Task<bool> AssignMedicalCase(DoctorsInChargeOfCase entity)
@@ -59,13 +59,14 @@ public class DoctorRepository : Repo<Doctor, int>, IDoctorRepository
             .ToListAsync();
     }
 
-    public async Task<List<Doctor?>> GetBusyDostors()
-    {
-        return await context.DoctorsInCaseOperations
+    public async Task<List<Doctor>> GetBusyDoctors(){
 
-            .Where(o => o.EndOfOperating > DateTime.Now || o.EndOfOperating == null)
-            .Select(d => d.Doctor)
-
+        return await context.Doctors
+            .Include(d => d.DoctorsInCaseOperations) 
+                .ThenInclude(dco => dco.CaseOperation)
+            .Include(d => d.DoctorsInChargeOfCases) 
+                .ThenInclude(dcc => dcc.Case) 
+            .Where(d => d.DoctorsInCaseOperations.Any(dco => dco.EndOfOperating == null))
             .ToListAsync();
     }
 }
