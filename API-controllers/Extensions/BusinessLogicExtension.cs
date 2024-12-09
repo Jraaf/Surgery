@@ -3,6 +3,10 @@ using Business.Services.Interfaces;
 using DataAccess.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using DataAccess.Repository.Interfaces;
+using API_controllers.DataAccess.Repository.Interfaces;
+using API_controllers.DataAccess.Repository;
+using API_controllers.Business.Services.Interfaces;
+using API_controllers.Business.Services;
 
 namespace API_controllers.Extensions;
 
@@ -19,6 +23,7 @@ public static class BusinessLogicExtension
         services.AddScoped<IOperationRepository, OperationRepository>();
         services.AddScoped<IPatientRepository, PatientRepository>();
         services.AddScoped<IResearchRepository, ResearchRepository>();
+        services.AddScoped<ICaseOperationReposirtory,CaseOperationRepository>();
         return services;
     }
     public static IServiceCollection AddRequiredServices(this IServiceCollection services)
@@ -31,6 +36,7 @@ public static class BusinessLogicExtension
         services.AddScoped<IMedicalCaseService, MedicalCaseService>();
         services.AddScoped<IPatientService, PatientService>();
         services.AddScoped<IResearchService, ResearchService>();
+        services.AddScoped<ICaseOperationService,CaseOperationService>(); 
         return services;
     }
 }
