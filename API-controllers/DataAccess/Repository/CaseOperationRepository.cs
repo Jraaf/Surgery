@@ -29,6 +29,24 @@ public class CaseOperationRepository : Repo<CaseOperation, int>, ICaseOperationR
         return await context.CaseOperations
             .Include(co => co.DoctorsInCaseOperations)
                 .ThenInclude(dco => dco.Doctor)
-                .FirstOrDefaultAsync(co=>co.CaseOperationId == id);
+                .FirstOrDefaultAsync(co => co.CaseOperationId == id);
+    }
+    public async new Task<bool> DeleteAsync(CaseOperation entity)
+    {
+        var relatedDoctors = await context.DoctorsInCaseOperations
+        .Where(d => d.CaseOperationId == entity.CaseOperationId)
+        .ToListAsync();
+
+        foreach (var doctor in relatedDoctors)
+        {
+            doctor.CaseOperationId = null; // Explicitly set to null
+        }
+
+        // Save changes after nullifying foreign keys
+        await context.SaveChangesAsync();
+
+        // Remove the CaseOperation entity
+        context.CaseOperations.Remove(entity);
+        return await context.SaveChangesAsync() > 0;
     }
 }

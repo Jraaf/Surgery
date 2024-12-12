@@ -118,10 +118,12 @@ public partial class OperationsDepartmentContext : DbContext
 
             entity.HasOne(d => d.CaseOperation).WithMany(p => p.DoctorsInCaseOperations)
                 .HasForeignKey(d => d.CaseOperationId)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK__Doctors_I__Case___778AC167");
 
             entity.HasOne(d => d.Doctor).WithMany(p => p.DoctorsInCaseOperations)
                 .HasForeignKey(d => d.DoctorId)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK__Doctors_I__Docto__787EE5A0");
         });
 
